@@ -77,19 +77,23 @@ public class Graph {
     }
 
     //delete edge
-    public boolean deleteEdge(Vertex start, Vertex end, int weight){
-        Edge target = new Edge(end, weight);
-        if(!adjacencyMap.get(start).contains(target)){
-            return false;
+    public boolean deleteEdge(Vertex start, Vertex end){
+
+        List<Edge> adjacent = adjacencyMap.get(start);
+
+        for (Edge e : adjacent){
+            if (e.getConnection().equals(end)){
+                adjacencyMap.get(start).remove(e);
+                return true;
+            }
         }
-        else {
-            adjacencyMap.get(start).remove(target);
-            return true;
-        }
+
+        return false;
     }
 
+
     public int getEdgeWeight(Vertex start, Vertex end){
-        if(adjacencyMap.get(start).isEmpty()){
+        if(!adjacencyMap.containsKey(start) || adjacencyMap.get(start).isEmpty()){
             throw new IllegalArgumentException("No connection found");
         }
         else {
@@ -108,4 +112,7 @@ public class Graph {
     }
 
     //find paths with limiting weight factors
+    public List<Vertex> findPath(Vertex start, Vertex end, int weightLimit){
+        return new ArrayList<Vertex>();
+    }
 }
